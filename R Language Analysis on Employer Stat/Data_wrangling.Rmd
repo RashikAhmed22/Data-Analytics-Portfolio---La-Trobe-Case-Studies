@@ -1,0 +1,175 @@
+#1
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+
+# Load the CSV and Excel data
+demographics <- read_csv('C:/Users/ACER/Downloads/Assignment 3/Assignment 3/survey_employee_demographics.csv')
+employment <- read_excel('C:/Users/ACER/Downloads/Assignment 3/Assignment 3/survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Display the combined data
+print(head(combined_data))
+
+#2a
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+
+# Load the CSV and Excel data
+demographics <- read_csv('survey_employee_demographics.csv')
+employment <- read_excel('survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Summary of the combined data
+summary_data <- summary(combined_data)
+str_data <- str(combined_data)
+
+# Print summary and structure
+print(summary_data)
+print(str_data)
+
+#2c
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+
+# Load the CSV and Excel data
+demographics <- read_csv('survey_employee_demographics.csv')
+employment <- read_excel('survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Rename columns for clarity
+colnames(combined_data) <- make.names(colnames(combined_data))
+
+# Convert data types if necessary
+combined_data$YearlyBruttoSalaryInEUR <- as.numeric(combined_data$YearlyBruttoSalaryInEUR)
+combined_data$Gender <- as.factor(combined_data$Gender)
+combined_data$EmploymentStatus <- as.factor(combined_data$EmploymentStatus)
+
+# Check the structure again after modifications
+str_cleaned <- str(combined_data)
+
+# Print cleaned structure
+print(str_cleaned)
+
+#3
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+# Load the CSV and Excel data
+demographics <- read_csv('survey_employee_demographics.csv')
+employment <- read_excel('survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Define breaks for histogram
+hist_breaks <- seq(0, max(combined_data$YearlyBruttoSalaryInEUR), by = 10000)
+
+# Histogram with specified breaks
+histogram_plot <- ggplot(combined_data, aes(x = YearlyBruttoSalaryInEUR)) +
+  geom_histogram(breaks = hist_breaks, fill = 'blue', color = 'black', alpha = 0.7) +
+  labs(title = "Distribution of Yearly Brutto Salary in EUR", x = "Yearly Brutto Salary (EUR)", y = "Frequency") +
+  theme_minimal()
+
+# Boxplot
+boxplot_plot <- ggplot(combined_data, aes(y = YearlyBruttoSalaryInEUR)) +
+  geom_boxplot(fill = 'orange', color = 'black', alpha = 0.7) +
+  labs(title = "Boxplot of Yearly Brutto Salary in EUR", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Print plots
+print(histogram_plot)
+print(boxplot_plot)
+
+
+
+#4
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+# Load the CSV and Excel data
+demographics <- read_csv('survey_employee_demographics.csv')
+employment <- read_excel('survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Boxplot of Salary by Gender
+boxplot_gender <- ggplot(combined_data, aes(x = Gender, y = YearlyBruttoSalaryInEUR, fill = Gender)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Salary by Gender", x = "Gender", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Violin plot to show the density distribution
+violin_plot_gender <- ggplot(combined_data, aes(x = Gender, y = YearlyBruttoSalaryInEUR, fill = Gender)) +
+  geom_violin() +
+  labs(title = "Violin Plot of Salary by Gender", x = "Gender", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Print plots
+print(boxplot_gender)
+print(violin_plot_gender)
+
+#5
+# Load necessary libraries
+library(readr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+# Load the CSV and Excel data
+demographics <- read_csv('survey_employee_demographics.csv')
+employment <- read_excel('survey_employee_employment_details.xlsx')
+
+# Merge the dataframes on "RecordID"
+combined_data <- merge(demographics, employment, by = "RecordID")
+
+# Scatter plot for Total Years of Experience vs Salary
+scatter_experience <- ggplot(combined_data, aes(x = TotalYearsOfExperience, y = YearlyBruttoSalaryInEUR)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = 'lm', color = 'red') +
+  labs(title = "Total Years of Experience vs Yearly Brutto Salary", x = "Total Years of Experience", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Boxplot for Seniority Level vs Salary
+boxplot_seniority <- ggplot(combined_data, aes(x = SeniorityLevel, y = YearlyBruttoSalaryInEUR, fill = SeniorityLevel)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Salary by Seniority Level", x = "Seniority Level", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Boxplot for Position vs Salary
+boxplot_position <- ggplot(combined_data, aes(x = Position, y = YearlyBruttoSalaryInEUR, fill = Position)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Salary by Position", x = "Position", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Boxplot for City vs Salary
+boxplot_city <- ggplot(combined_data, aes(x = City, y = YearlyBruttoSalaryInEUR, fill = City)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Salary by City", x = "City", y = "Yearly Brutto Salary (EUR)") +
+  theme_minimal()
+
+# Print plots
+print(scatter_experience)
+print(boxplot_seniority)
+print(boxplot_position)
+print(boxplot_city)
+
+
